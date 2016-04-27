@@ -73,7 +73,7 @@ Questions:
 
 ## Register Allocation
 
-Consider this alternate strategy for allocating registers, that doesn't use
+Consider this alternate strategy for allocating registers that doesn't use
 anything like `colorful_env`.  Starting from egg-eater, first, we change the
 signature of the compiler's functions slightly:
 
