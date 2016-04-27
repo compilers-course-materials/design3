@@ -4,7 +4,7 @@ In class and lab, we discussed constant propagation: an optimization that
 substituted constants into other expressions to save on variable space.
 
 A related optimization is called _common subexpression elimination_.  In some
-ways, it's the inverse of constant propagation.
+ways, it's the dual of constant propagation.
 
 It works like this: In an expression, search for multiple instances of the same
 sub-expression, and replace them with a new variable.  Then wrap the whole
@@ -60,7 +60,8 @@ Questions:
   unacceptable. (Assume, for the purposes of this question, that the printing
   example is obviously unacceptable)
 - Are there any cases for common subexpression elimination that don't change
-  the program?  Assume the semantics of egg-eater.
+  the behavior of the program, including cases like changing errors?  Assume
+  the semantics of egg-eater.
 - Are there changes to the language or other design decisions we could make
   that would make it easier to not change the program's behavior with this
   optimization?  Hint: Think about C's rules for arithmetic.  Another hint:
