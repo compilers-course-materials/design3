@@ -1,7 +1,7 @@
 ## Common Subexpression Elimination
 
 In class and lab, we discussed constant propagation: an optimization that
-substituted constants into other expressions to save on variable space.
+substitutes constants into other expressions to save on variable space.
 
 A related optimization is called _common subexpression elimination_.  In some
 ways, it's the dual of constant propagation.
