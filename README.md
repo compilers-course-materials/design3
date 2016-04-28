@@ -78,8 +78,8 @@ anything like `colorful_env`.  Starting from egg-eater, first, we change the
 signature of the compiler's functions slightly:
 
 ```
-acompile_cexpr :: (ce : cexpr) (env : location envt) (regs : reg list) (si : int) -> instruction list
-acompile_aexpr :: (ae : aexpr) (env : location envt) (regs : reg list) (si : int) -> instruction list
+acompile_step (s : cexpr) (si : int) (env : location envt) (regs : reg list) : instruction list
+acompile_expr (e : aexpr) (si : int) (env : location envt) (regs : reg list) : instruction list
 ```
 
 Where `location` is as in Hundred Pacer:
@@ -104,8 +104,8 @@ Otherwise, we use a stack location:
     let (loc, new_regs, new_si) = match regs with
       | [] -> (LStack(si), [], si + 1)
       | r::rs -> (LReg(r), rs, si) in
-    let cinstrs = acompile_cexpr ex env regs si in
-    let binstrs = acompile_aexpr b (x, loc)::env new_regs new_si in
+    let cinstrs = acompile_step ex si env regs in
+    let binstrs = acompile_expr b new_si ((id, loc)::env) new_regs in
     let dest = match loc with
       | LStack(si) -> RegOffset(-4 * si, EBP)
       | LReg(r) -> Reg(r) in
@@ -119,10 +119,10 @@ variable in the correct location:
 ```
 ...
   | ImmId(x) ->
-    match lookup env x with
-      | Some(LReg(r)) -> Reg(r)
-      | Some(LStack(si) -> RegOffset(-4 * si, EBP)
-      | None -> failwith "Unbound id"
+    match find env name with
+      | Some(LReg(reg)) -> Reg(reg)
+      | Some(LStack(stackloc)) -> RegOffset(-4 * stackloc, EBP)
+      | None -> failwith ("Unbound identifier" ^ name)
 ...
 ```
 
@@ -130,6 +130,11 @@ The initial value of `regs` can be any set of open registers.  For example we
 might choose `[EBX; EDX; ESI]` if we were building on, say, egg-eater or FDL,
 which don't use those registers for anything.  This would allow us to use
 registers for some variables, while others would end up on the stack.
+
+These changes are made in `with-regs/instruction.ml` and
+`with-regs/compile.ml`; you can compare them to versions _without_ the changes
+in `without-regs`.  These should work fine when dropped into an Egg-Eater
+implementation.
 
 Questions:
 
@@ -140,4 +145,6 @@ Questions:
   discussed in class?  Give some examples supporting your conclusion.
 - How does the time complexity of this strategy, in terms of the work the
   _compiler_ has to do, compare to the graph coloring algorithm?
+- What are your thoughts on the usefulness and quality of this strategy
+  overall?
 
