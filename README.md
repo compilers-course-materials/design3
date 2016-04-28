@@ -127,9 +127,9 @@ variable in the correct location:
 ```
 
 The initial value of `regs` can be any set of open registers.  For example we
-might choose `[EBX; EDX; ESI]` if we were building on, say, egg-eater or FDL,
-which don't use those registers for anything.  This would allow us to use
-registers for some variables, while others would end up on the stack.
+might choose `[EBX; EDX; ESI]` since we don't use those registers for anything.
+This would allow us to use registers for some variables, while others would end
+up on the stack.
 
 These changes are made in `with-regs/instruction.ml` and
 `with-regs/compile.ml`; you can compare them to versions _without_ the changes
