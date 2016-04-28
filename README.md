@@ -104,12 +104,12 @@ Otherwise, we use a stack location:
     let (loc, new_regs, new_si) = match regs with
       | [] -> (LStack(si), [], si + 1)
       | r::rs -> (LReg(r), rs, si) in
-    let cinstrs = acompile_step ex si env regs in
+    let xinstrs = acompile_step ex si env regs in
     let binstrs = acompile_expr b new_si ((id, loc)::env) new_regs in
     let dest = match loc with
       | LStack(si) -> RegOffset(-4 * si, EBP)
       | LReg(r) -> Reg(r) in
-    cinstrs @ [ IMov(dest, Reg(EAX)) ] @ binstrs
+    xinstrs @ [ IMov(dest, Reg(EAX)) ] @ binstrs
 ...
 ```
 
