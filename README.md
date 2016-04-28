@@ -145,6 +145,5 @@ Questions:
   discussed in class?  Give some examples supporting your conclusion.
 - How does the time complexity of this strategy, in terms of the work the
   _compiler_ has to do, compare to the graph coloring algorithm?
-- What are your thoughts on the usefulness and quality of this strategy
-  overall?
+- What are your thoughts on the utility of this strategy overall?
 
